@@ -20,10 +20,10 @@ From the bower.json file
 	
 In your html
 
-    <script type="text/javascript" src="bower_components/auto_font_size/dist/auto_font_size.js"></script>
+    <script type="text/javascript" src="bower_components/auto-font-size/dist/auto_font_size.js"></script>
 or
 
-    <script type="text/javascript" src="bower_components/auto_font_size/dist/auto_font_size.min.js"></script>
+    <script type="text/javascript" src="bower_components/auto-font-size/dist/auto_font_size.min.js"></script>
 
 ### Dependencies
 
