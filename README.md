@@ -31,3 +31,5 @@ requires angular and jquery
 
 
 ### Documentation
+
+[0.0.1](http://www.pedago.com/auto-font-size/docs/0.0.1)  
