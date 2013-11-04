@@ -59,6 +59,7 @@ Dir.mktmpdir do |tmpdir|
   
   # copy the docs to the right place
   begin
+    FileUtils.mkdir_p('docs')
     FileUtils.rm_r("docs/#{version}")
   rescue; end
   FileUtils.mv(tmp_doc_dir, "docs/#{version}")
