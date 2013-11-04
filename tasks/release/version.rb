@@ -67,11 +67,7 @@ Dir.mktmpdir do |tmpdir|
   versions = Dir.glob("docs/*").map do |dir| 
     dir.match(/\/([\d\.]+)$/)[1] 
   end.compact.sort.reverse    
-  
-  puts "docs/*"
-  puts Dir.glob("docs/*").inspect
-  puts versions.inspect
-      
+        
   # add links to index file
   File.open("index.html", "w+") do |f|
     f.write("<h1>Auto-Font-Size Docs</h1>\n\n")
