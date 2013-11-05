@@ -43,6 +43,7 @@ angular.module('AutoFontSize', [])
                     
                         function setFontSize(size) {
                             inner.css('fontSize', size + 'px');
+                            inner.css('lineHeight', (size+2) + 'px');
                         }
                     
                         function fontTooBig() {
