@@ -34,7 +34,13 @@ version = ENV['version'] || ARGV[0]
 raise("No version provided") unless version
 
 orig_branch = run("git rev-parse --abbrev-ref HEAD")[0].strip
-run("grunt groc")
+out, err = run("grunt groc")
+
+if out.match(/Fatal error/)
+  puts out
+  exit
+end
+
 commit_and_push(orig_branch, "Updating docs")
 
 Dir.mktmpdir do |tmpdir| 
