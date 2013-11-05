@@ -1,6 +1,6 @@
 {
     "name": "auto-font-size",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "./dist/auto_font_size.js",
     "dependencies": {
         "angular": ">1.0.0",

@@ -13,7 +13,7 @@ From the bower.json file
     {
 	    "...
 	    "dependencies": {
-	        "auto-font-size": "0.0.1"
+	        "auto-font-size": "0.0.2"
 	    },
 		...
 	}
@@ -32,4 +32,5 @@ requires angular and jquery
 
 ### Documentation
 
+[0.0.2](http://www.pedago.com/auto-font-size/docs/0.0.2)  
 [0.0.1](http://www.pedago.com/auto-font-size/docs/0.0.1)  
