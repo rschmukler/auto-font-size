@@ -53,32 +53,6 @@ a space.</p></div></div><div class="code"><div class="wrapper">    <span class="
         <span class="nx">render</span><span class="p">(</span><span class="s1">&#39;&lt;div auto-font-size=&quot;options&quot;  style=&quot;width: 100px; height: 100px; font-size: 12px&quot;&gt;ipsum lorem&lt;/div&gt;&#39;</span><span class="p">);</span>
         <span class="nx">assertFontSizeEquals</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
     <span class="p">});</span>
-    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="re-size-when-things-change">Re-size when things change</h3>
-
-<p>By using the 'watch' option, you can watch one or 
-more properties on the parent scope, and resize when those properties 
-change.  If you want to watch more than one property, then provide
-a comma-separated list of properties.    </p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should update when a watched something changes&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        
-        <span class="nx">scope</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="p">{</span><span class="nx">watch</span><span class="o">:</span> <span class="s1">&#39;something, else&#39;</span><span class="p">};</span>
-        <span class="nx">render</span><span class="p">(</span><span class="s1">&#39;&lt;div auto-font-size=&quot;options&quot; style=&quot;width: 40px; height: 10px; font-size: 16px&quot;&gt;ipsum lorem&lt;/div&gt;&#39;</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">assertFontSizeLessThan</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
-        
-        <span class="nx">elem</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;So much text that we will have to shrink even more in order to fit because it is wrapping.&#39;</span><span class="p">);</span>
-        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-        <span class="c1">//font size should not have been resized yet, because the watched variables have not changed</span>
-        <span class="nx">assertFontSizeEquals</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">);</span>
-        
-        <span class="nx">scope</span><span class="p">.</span><span class="nx">something</span> <span class="o">=</span> <span class="s2">&quot;changed&quot;</span><span class="p">;</span>
-        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-        <span class="c1">//now that &#39;something&#39; has changed, the auto-font-size element re-sized</span>
-        <span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">assertFontSizeLessThan</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">);</span>
-        
-        <span class="nx">elem</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;make this bigger&#39;</span><span class="p">);</span>
-        <span class="nx">scope</span><span class="p">.</span><span class="k">else</span> <span class="o">=</span> <span class="s2">&quot;changed&quot;</span><span class="p">;</span>
-        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-        <span class="nx">assertFontSizeGreaterThan</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">);</span>
-    <span class="p">});</span>
     
     <span class="kd">function</span> <span class="nx">assertFontSizeEquals</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">expect</span><span class="p">(</span><span class="nx">fontSizeI</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>

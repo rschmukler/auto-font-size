@@ -18,38 +18,31 @@
                         <span class="kd">var</span> <span class="nx">inner</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;div[data-role]&#39;</span><span class="p">);</span>
                         <span class="nx">shrinkOrGrow</span><span class="p">();</span>
                         
-                        <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">watch</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="nx">angular</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">watch</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
-                                <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">shrinkOrGrow</span><span class="p">);</span>
-                            <span class="p">});</span>
-                        <span class="p">}</span>
-                    
+                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="nx">shrinkOrGrow</span><span class="p">);</span>
+                                            
                         <span class="kd">function</span> <span class="nx">shrinkOrGrow</span><span class="p">()</span> <span class="p">{</span>
-                            <span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
                             <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                            <span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">;</span>
                             
                             <span class="k">if</span> <span class="p">(</span><span class="nx">fontTooBig</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">options</span><span class="p">.</span><span class="nx">shrink</span><span class="p">)</span> <span class="p">{</span>
-                                <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
-                                
                                 <span class="k">while</span> <span class="p">(</span><span class="nx">fontTooBig</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
-                                    <span class="nx">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="nx">step</span><span class="p">)</span><span class="o">*</span><span class="nx">size</span><span class="p">;</span>
-                                    <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
+                                    <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">fontSizeI</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
                                     <span class="nx">i</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
                                 <span class="p">}</span>
                             <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">fontTooSmall</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">options</span><span class="p">.</span><span class="nx">grow</span><span class="p">)</span> <span class="p">{</span>
-                                <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
-                                
                                 <span class="k">while</span> <span class="p">(</span><span class="nx">fontTooSmall</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
-                                    <span class="nx">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nx">step</span><span class="p">)</span><span class="o">*</span><span class="nx">size</span><span class="p">;</span>
-                                    <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
+                                    <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">fontSizeI</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
                                     <span class="nx">i</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
                                 <span class="p">}</span>
                             <span class="p">}</span>
                         <span class="p">}</span>
+                        
+                        <span class="kd">function</span> <span class="nx">fontSizeI</span><span class="p">()</span> <span class="p">{</span>
+                            <span class="kd">var</span> <span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">inner</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;font-size&#39;</span><span class="p">);</span>
+                            <span class="k">return</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d+/</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
+                        <span class="p">}</span>
                     
-                        <span class="kd">function</span> <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">em</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="nx">inner</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;fontSize&#39;</span><span class="p">,</span> <span class="nx">em</span> <span class="o">+</span> <span class="s1">&#39;em&#39;</span><span class="p">);</span>
+                        <span class="kd">function</span> <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">inner</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;fontSize&#39;</span><span class="p">,</span> <span class="nx">size</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">);</span>
                         <span class="p">}</span>
                     
                         <span class="kd">function</span> <span class="nx">fontTooBig</span><span class="p">()</span> <span class="p">{</span>

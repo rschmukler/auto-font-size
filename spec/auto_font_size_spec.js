@@ -59,33 +59,6 @@ describe('auto-font-size', function() {
         assertFontSizeEquals(12);
     });
     
-    // ### Re-size when things change
-    // By using the 'watch' option, you can watch one or 
-    // more properties on the parent scope, and resize when those properties 
-    // change.  If you want to watch more than one property, then provide
-    // a comma-separated list of properties.    
-    it('should update when a watched something changes', function() {
-        
-        scope.options = {watch: 'something, else'};
-        render('<div auto-font-size="options" style="width: 40px; height: 10px; font-size: 16px">ipsum lorem</div>');
-        var fontSize = assertFontSizeLessThan(12);
-        
-        elem.find('div').html('So much text that we will have to shrink even more in order to fit because it is wrapping.');
-        scope.$apply();
-        //font size should not have been resized yet, because the watched variables have not changed
-        assertFontSizeEquals(fontSize);
-        
-        scope.something = "changed";
-        scope.$apply();
-        //now that 'something' has changed, the auto-font-size element re-sized
-        fontSize = assertFontSizeLessThan(fontSize);
-        
-        elem.find('div').html('make this bigger');
-        scope.else = "changed";
-        scope.$apply();
-        assertFontSizeGreaterThan(fontSize);
-    });
-    
     function assertFontSizeEquals(size) {
         expect(fontSizeI()).toBe(size);
         return fontSizeI();

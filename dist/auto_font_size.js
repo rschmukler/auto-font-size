@@ -18,38 +18,31 @@ angular.module('AutoFontSize', [])
                         var inner = elem.find('div[data-role]');
                         shrinkOrGrow();
                         
-                        if (options.watch) {
-                            angular.forEach(options.watch.split(','), function(str){
-                                scope.$watch(str, shrinkOrGrow);
-                            });
-                        }
-                    
+                        scope.$watch(shrinkOrGrow);
+                                            
                         function shrinkOrGrow() {
-                            var size = 1;
                             var i = 0;
-                            var step = 0.05;
                             
                             if (fontTooBig() && options.shrink) {
-                                setFontSize(size);
-                                
                                 while (fontTooBig() && i < 100) {
-                                    size = (1-step)*size;
-                                    setFontSize(size);
+                                    setFontSize(fontSizeI() - 1);
                                     i = i + 1;
                                 }
                             } else if (fontTooSmall() && options.grow) {
-                                setFontSize(size);
-                                
                                 while (fontTooSmall() && i < 100) {
-                                    size = (1+step)*size;
-                                    setFontSize(size);
+                                    setFontSize(fontSizeI() + 1);
                                     i = i + 1;
                                 }
                             }
                         }
+                        
+                        function fontSizeI() {
+                            var fontSize = inner.css('font-size');
+                            return Number(fontSize.match(/\d+/)[0]);
+                        }
                     
-                        function setFontSize(em) {
-                            inner.css('fontSize', em + 'em');
+                        function setFontSize(size) {
+                            inner.css('fontSize', size + 'px');
                         }
                     
                         function fontTooBig() {
