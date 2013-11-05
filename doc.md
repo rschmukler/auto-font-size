@@ -1,7 +1,3 @@
-Welcome to iguana documentation.
+Welcome to auto-font-size documentation.
 
-The most useful documentation is in our [spec file](spec/basics_spec.html)
-
- * [Basics](spec/basics_spec.html)
-
-For information about creating new adapters, see [AdapterBase](scripts/adapters/adapter_base.html)
+The most useful documentation is in our [spec file](spec/auto_font_size.html)
