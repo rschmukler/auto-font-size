@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('AutoFontSize', [])
-    .directive('autoFontSize', [
-        function() {
+    .directive('autoFontSize', ['$window', 
+        function($window) {
             return {
                 template: '<div data-role="inner" ng-transclude></div>',
                 transclude: true,
@@ -12,19 +12,20 @@ angular.module('AutoFontSize', [])
                         var providedOptions = scope.$eval(attrs.autoFontSize) || {};
                         var options = angular.extend({
                             shrink: true,
-                            grow: true
+                            grow: true,
+                            minSize: 1
                         }, providedOptions);
                     
                         var inner = elem.find('div[data-role]');
-                        shrinkOrGrow();
                         
+                        // on every scope.$digest, check if a resize is needed
                         scope.$watch(shrinkOrGrow);
                                             
                         function shrinkOrGrow() {
                             var i = 0;
                             
                             if (fontTooBig() && options.shrink) {
-                                while (fontTooBig() && i < 100) {
+                                while (fontTooBig() && i < 100 && fontSizeI() >= options.minSize) {
                                     setFontSize(fontSizeI() - 1);
                                     i = i + 1;
                                 }
@@ -33,7 +34,14 @@ angular.module('AutoFontSize', [])
                                     setFontSize(fontSizeI() + 1);
                                     i = i + 1;
                                 }
+                            } else {
+                                return;
                             }
+                            
+                            scope.$emit('auto-font-size:resized', {
+                                fontSize: fontSizeI(),
+                                elem: elem
+                            });
                         }
                         
                         function fontSizeI() {
