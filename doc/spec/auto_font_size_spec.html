@@ -53,6 +53,40 @@ a space.</p></div></div><div class="code"><div class="wrapper">    <span class="
         <span class="nx">render</span><span class="p">(</span><span class="s1">&#39;&lt;div auto-font-size=&quot;options&quot;  style=&quot;width: 100px; height: 100px; font-size: 12px&quot;&gt;ipsum lorem&lt;/div&gt;&#39;</span><span class="p">);</span>
         <span class="nx">assertFontSizeEquals</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
     <span class="p">});</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="observing-the-resize">Observing the resize</h3>
+
+<p>You can observe the 'auto-font-size:resized' event
+if you need to know when a resize has happend</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should fire an event on resize&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">callback</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpy</span><span class="p">(</span><span class="s1">&#39;callback&#39;</span><span class="p">);</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;auto-font-size:resized&#39;</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+        
+        <span class="c1">//div is very large, so there should be no resize</span>
+        <span class="nx">render</span><span class="p">(</span><span class="s1">&#39;&lt;div auto-font-size=&quot;{grow: false}&quot; style=&quot;width: 400px; height: 1000px; font-size: 16px&quot;&gt;ipsum lorem&lt;/div&gt;&#39;</span><span class="p">);</span>
+        <span class="nx">assertFontSizeEquals</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+        
+        <span class="c1">//requires resize</span>
+        <span class="nx">render</span><span class="p">(</span><span class="s1">&#39;&lt;div auto-font-size=&quot;options&quot; style=&quot;width: 40px; height: 10px; font-size: 16px&quot;&gt;ipsum lorem&lt;/div&gt;&#39;</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">assertFontSizeLessThan</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">callback</span><span class="p">.</span><span class="nx">calls</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">args</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">fontSize</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">);</span>        
+    <span class="p">});</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="when-does-the-resize-happen">When does the resize happen?</h3>
+
+<p>The resize will be triggered on every call of scope.$digest()</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should resize on every scope.$digest&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">render</span><span class="p">(</span><span class="s1">&#39;&lt;div auto-font-size=&quot;options&quot; style=&quot;width: 20px; height: 20px; font-size: 16px&quot;&gt;this is too much text to fit&lt;/div&gt;&#39;</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">assertFontSizeLessThan</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+        <span class="nx">elem</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;[data-role=&quot;inner&quot;]&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;less font&#39;</span><span class="p">);</span>
+        
+        <span class="c1">//font size should not have changed yet, because there has not been a scope digest</span>
+        <span class="nx">assertFontSizeEquals</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">);</span>
+        
+        <span class="c1">//after the digest call, font size should change</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$digest</span><span class="p">();</span>
+        <span class="nx">assertFontSizeGreaterThan</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">);</span>
+    <span class="p">});</span>
     
     <span class="kd">function</span> <span class="nx">assertFontSizeEquals</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">expect</span><span class="p">(</span><span class="nx">fontSizeI</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
@@ -69,9 +103,13 @@ a space.</p></div></div><div class="code"><div class="wrapper">    <span class="
         <span class="k">return</span> <span class="nx">fontSizeI</span><span class="p">();</span>
     <span class="p">}</span>
     
+    <span class="kd">function</span> <span class="nx">fontSizeGreaterThan</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">fontSizeI</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nx">size</span><span class="p">;</span>
+    <span class="p">}</span>
+    
     <span class="kd">function</span> <span class="nx">fontSizeI</span><span class="p">()</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;[data-role=&quot;inner&quot;]&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;font-size&#39;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d+/</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d+/</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>        
     <span class="p">}</span>
     
     <span class="kd">function</span> <span class="nx">render</span><span class="p">(</span><span class="nx">html</span><span class="p">)</span> <span class="p">{</span>

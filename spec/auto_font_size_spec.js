@@ -59,6 +59,42 @@ describe('auto-font-size', function() {
         assertFontSizeEquals(12);
     });
     
+    // ### Observing the resize
+    // You can observe the 'auto-font-size:resized' event
+    // if you need to know when a resize has happend
+    it('should fire an event on resize', function() {
+        var callback = jasmine.createSpy('callback');
+        scope.$on('auto-font-size:resized', callback);
+        
+        //div is very large, so there should be no resize
+        render('<div auto-font-size="{grow: false}" style="width: 400px; height: 1000px; font-size: 16px">ipsum lorem</div>');
+        assertFontSizeEquals(16);
+        expect(callback).not.toHaveBeenCalled();
+        
+        //requires resize
+        render('<div auto-font-size="options" style="width: 40px; height: 10px; font-size: 16px">ipsum lorem</div>');
+        var fontSize = assertFontSizeLessThan(10);
+        expect(callback).toHaveBeenCalled();
+        var data = callback.calls[0].args[1];
+        expect(data.elem[0]).toBe(elem[0]);
+        expect(data.fontSize).toBe(fontSize);        
+    });
+    
+    // ### When does the resize happen?
+    // The resize will be triggered on every call of scope.$digest()
+    it('should resize on every scope.$digest', function() {
+        render('<div auto-font-size="options" style="width: 20px; height: 20px; font-size: 16px">this is too much text to fit</div>');
+        var fontSize = assertFontSizeLessThan(20);
+        elem.find('[data-role="inner"]').html('less font');
+        
+        //font size should not have changed yet, because there has not been a scope digest
+        assertFontSizeEquals(fontSize);
+        
+        //after the digest call, font size should change
+        scope.$digest();
+        assertFontSizeGreaterThan(fontSize);
+    });
+    
     function assertFontSizeEquals(size) {
         expect(fontSizeI()).toBe(size);
         return fontSizeI();
@@ -74,9 +110,13 @@ describe('auto-font-size', function() {
         return fontSizeI();
     }
     
+    function fontSizeGreaterThan(size) {
+        return fontSizeI() > size;
+    }
+    
     function fontSizeI() {
         var fontSize = elem.find('[data-role="inner"]').css('font-size');
-        return Number(fontSize.match(/\d+/)[0]);
+        return Number(fontSize.match(/\d+/)[0]);        
     }
     
     function render(html) {
