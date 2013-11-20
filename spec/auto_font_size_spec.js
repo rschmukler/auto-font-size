@@ -45,7 +45,9 @@ describe('auto-font-size', function() {
     // in a space.
     it('should not shrink if configured not to', function() {
         scope.options = {shrink: false};
+        console.log(1);
         render('<div auto-font-size="options" style="width: 40px; height: 10px; font-size: 16px">ipsum lorem</div>');
+        console.log(2);
         assertFontSizeEquals(16);
     });
     
@@ -75,6 +77,7 @@ describe('auto-font-size', function() {
         render('<div auto-font-size="options" style="width: 40px; height: 10px; font-size: 16px">ipsum lorem</div>');
         var fontSize = assertFontSizeLessThan(10);
         expect(callback).toHaveBeenCalled();
+        expect(callback.calls.length).toBe(1);
         var data = callback.calls[0].args[1];
         expect(data.elem[0]).toBe(elem[0]);
         expect(data.fontSize).toBe(fontSize);        
@@ -93,6 +96,16 @@ describe('auto-font-size', function() {
         //after the digest call, font size should change
         scope.$digest();
         assertFontSizeGreaterThan(fontSize);
+    });
+    
+    it('should allow text to grow back to the original size, even if grow is set to false', function() {
+        
+        scope.options = {grow: false};
+        render('<div auto-font-size="options" style="width: 40px; height: 22px; font-size: 16px">ipsum lorem asf a lksadfsa sadl fsad fsa as fas</div>');
+        assertFontSizeLessThan(10);
+        elem.find('[data-role="inner"]').text('n');
+        scope.$digest();
+        assertFontSizeEquals(16);
     });
     
     function assertFontSizeEquals(size) {

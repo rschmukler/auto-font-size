@@ -15,6 +15,7 @@ angular.module('AutoFontSize', [])
                             grow: true,
                             minSize: 1
                         }, providedOptions);
+                        var originalFontSize;
                     
                         var inner = elem.find('div[data-role]');
                         
@@ -23,7 +24,16 @@ angular.module('AutoFontSize', [])
                                             
                         function shrinkOrGrow() {
                             var i = 0;
+                            if (fontSizeI() === null) { return; }
                             
+                            // originalFontSize is the font size when the directive was first created, 
+                            // before the auto-font-size directive ever changed it
+                            if (!originalFontSize) {
+                                originalFontSize = fontSizeI();
+                            }   
+                            
+                            // currentFontSize is the font size before this run of shrinkOrGrow
+                            var currentFontSize = fontSizeI();
                             if (fontTooBig() && options.shrink) {
                                 while (fontTooBig() && i < 100 && fontSizeI() >= options.minSize) {
                                     setFontSize(fontSizeI() - 1);
@@ -33,28 +43,49 @@ angular.module('AutoFontSize', [])
                                 while (fontTooSmall() && i < 100) {
                                     setFontSize(fontSizeI() + 1);
                                     i = i + 1;
+                                }  
+                                correctOvershoot();
+                            } else if (!fontTooBig() && fontHasBeenShrunk()) {
+                                while (!fontTooBig() && fontHasBeenShrunk() && i < 100) {
+                                    setFontSize(fontSizeI() + 1);
+                                    i = i + 1;
                                 }
-                            } else {
-                                return;
+                                correctOvershoot();
+                            }
+                                                        
+                            
+                            // if the font size has changed, thn emit an event
+                            if (currentFontSize != fontSizeI()) {
+                                scope.$emit('auto-font-size:resized', {
+                                    fontSize: fontSizeI(),
+                                    elem: elem
+                                });
                             }
                             
-                            scope.$emit('auto-font-size:resized', {
-                                fontSize: fontSizeI(),
-                                elem: elem
-                            });
+                        }
+                        
+                        function correctOvershoot() {
+                            if (fontTooBig()) {
+                                setFontSize(fontSizeI() - 1); 
+                            }
                         }
                         
                         function fontSizeI() {
                             var fontSize = inner.css('font-size');
-                            return Number(fontSize.match(/\d+/)[0]);
+                            var match = fontSize.match(/\d+/);
+                            return match ? Number(match[0]) : null;
                         }
                     
                         function setFontSize(size) {
                             inner.css('fontSize', size + 'px');
                             inner.css('lineHeight', (size+2) + 'px');
                         }
+                        
+                        function fontHasBeenShrunk() {
+                            return fontSizeI() < originalFontSize;
+                        }
                     
-                        function fontTooBig() {
+                        function fontTooBig() {                            
                             return (inner.width() > elem.width() || inner.height() > elem.height());
                         }
                     
