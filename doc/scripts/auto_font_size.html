@@ -3,6 +3,7 @@
 <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;AutoFontSize&#39;</span><span class="p">,</span> <span class="p">[])</span>
     <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;autoFontSize&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$window&#39;</span><span class="p">,</span> 
         <span class="kd">function</span><span class="p">(</span><span class="nx">$window</span><span class="p">)</span> <span class="p">{</span>
+
             <span class="k">return</span> <span class="p">{</span>
                 <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;&lt;div data-role=&quot;inner&quot; ng-transclude&gt;&lt;/div&gt;&#39;</span><span class="p">,</span>
                 <span class="nx">transclude</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -18,10 +19,10 @@
                     
                         <span class="kd">var</span> <span class="nx">inner</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;div[data-role]&#39;</span><span class="p">);</span>
                         </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>on every scope.$digest, check if a resize is needed</p></div></div><div class="code"><div class="wrapper">                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="nx">shrinkOrGrow</span><span class="p">);</span>
-                                            
+
                         <span class="kd">function</span> <span class="nx">shrinkOrGrow</span><span class="p">()</span> <span class="p">{</span>
                             <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                            
+
                             <span class="k">if</span> <span class="p">(</span><span class="nx">fontTooBig</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">options</span><span class="p">.</span><span class="nx">shrink</span><span class="p">)</span> <span class="p">{</span>
                                 <span class="k">while</span> <span class="p">(</span><span class="nx">fontTooBig</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="o">&amp;&amp;</span> <span class="nx">fontSizeI</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">minSize</span><span class="p">)</span> <span class="p">{</span>
                                     <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">fontSizeI</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
@@ -32,7 +33,7 @@
                                     <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">fontSizeI</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
                                     <span class="nx">i</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
                                 <span class="p">}</span>
-                            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>deal with line-height and images</p></div></div><div class="code"><div class="wrapper">                                <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">fontSizeI</span><span class="p">());</span>
                                 <span class="k">return</span><span class="p">;</span>
                             <span class="p">}</span>
                             
@@ -50,6 +51,7 @@
                         <span class="kd">function</span> <span class="nx">setFontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span>
                             <span class="nx">inner</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;fontSize&#39;</span><span class="p">,</span> <span class="nx">size</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">);</span>
                             <span class="nx">inner</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;lineHeight&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">size</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">);</span>
+                            <span class="nx">inner</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">(</span><span class="nx">size</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
                         <span class="p">}</span>
                     
                         <span class="kd">function</span> <span class="nx">fontTooBig</span><span class="p">()</span> <span class="p">{</span>
