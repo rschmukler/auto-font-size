@@ -37,7 +37,9 @@ angular.module('AutoFontSize', [])
                                 }
                             } else {
                                 // deal with line-height and images
-                                setFontSize(fontSizeI());
+                                if (inner.css('font-size')) {
+                                    setFontSize(fontSizeI());
+                                }
                                 return;
                             }
                             
