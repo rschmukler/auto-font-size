@@ -3,6 +3,7 @@
 angular.module('AutoFontSize', [])
     .directive('autoFontSize', ['$window', 
         function($window) {
+
             return {
                 template: '<div data-role="inner" ng-transclude></div>',
                 transclude: true,
@@ -20,10 +21,10 @@ angular.module('AutoFontSize', [])
                         
                         // on every scope.$digest, check if a resize is needed
                         scope.$watch(shrinkOrGrow);
-                                            
+
                         function shrinkOrGrow() {
                             var i = 0;
-                            
+
                             if (fontTooBig() && options.shrink) {
                                 while (fontTooBig() && i < 100 && fontSizeI() >= options.minSize) {
                                     setFontSize(fontSizeI() - 1);
@@ -35,6 +36,8 @@ angular.module('AutoFontSize', [])
                                     i = i + 1;
                                 }
                             } else {
+                                // deal with line-height and images
+                                setFontSize(fontSizeI());
                                 return;
                             }
                             
@@ -52,6 +55,7 @@ angular.module('AutoFontSize', [])
                         function setFontSize(size) {
                             inner.css('fontSize', size + 'px');
                             inner.css('lineHeight', (size+2) + 'px');
+                            inner.find('img').height(size+2);
                         }
                     
                         function fontTooBig() {

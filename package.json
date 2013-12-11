@@ -1,6 +1,6 @@
 {
   "name": "auto-font-size",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "angular directive that automatically shrinks or grows text to fit in a fixed-sized element.",
   "repository": {
     "url": "https://github.com/nbrustein/auto-font-size.git",
