@@ -25,6 +25,9 @@ angular.module('AutoFontSize', [])
                         function shrinkOrGrow() {
                             var i = 0;
 
+                            // deal with line-height and images
+                            adjustLineHeightAndInlineImages();
+
                             if (fontTooBig() && options.shrink) {
                                 while (fontTooBig() && i < 100 && fontSizeI() >= options.minSize) {
                                     setFontSize(fontSizeI() - 1);
@@ -36,10 +39,6 @@ angular.module('AutoFontSize', [])
                                     i = i + 1;
                                 }
                             } else {
-                                // deal with line-height and images
-                                if (inner.css('font-size')) {
-                                    setFontSize(fontSizeI());
-                                }
                                 return;
                             }
                             
@@ -56,8 +55,18 @@ angular.module('AutoFontSize', [])
                     
                         function setFontSize(size) {
                             inner.css('fontSize', size + 'px');
+                            adjustLineHeightAndInlineImages();
+                        }
+
+                        function adjustLineHeightAndInlineImages() {
+                            if (!fontSizeAdjusted()) { return; }
+                            var size = fontSizeI();
                             inner.css('lineHeight', (size+2) + 'px');
                             inner.find('img').height(size+2);
+                        }
+
+                        function fontSizeAdjusted() {
+                            return !!inner.css('font-size');
                         }
                     
                         function fontTooBig() {
