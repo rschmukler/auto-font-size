@@ -32,9 +32,9 @@ requires angular and jquery
 
 ### Documentation
 
-[0.0.6](http://www.pedago.com/auto-font-size/docs/0.0.6)  
-[0.0.5](http://www.pedago.com/auto-font-size/docs/0.0.5)  
-[0.0.4](http://www.pedago.com/auto-font-size/docs/0.0.4)  
-[0.0.3](http://www.pedago.com/auto-font-size/docs/0.0.3)  
-[0.0.2](http://www.pedago.com/auto-font-size/docs/0.0.2)  
-[0.0.1](http://www.pedago.com/auto-font-size/docs/0.0.1)  
+[0.0.6](http://pedago.github.io/auto-font-size/docs/0.0.6)  
+[0.0.5](http://pedago.github.io/auto-font-size/docs/0.0.5)  
+[0.0.4](http://pedago.github.io/auto-font-size/docs/0.0.4)  
+[0.0.3](http://pedago.github.io/auto-font-size/docs/0.0.3)  
+[0.0.2](http://pedago.github.io/auto-font-size/docs/0.0.2)  
+[0.0.1](http://pedago.github.io/auto-font-size/docs/0.0.1)  
