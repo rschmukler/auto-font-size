@@ -58,6 +58,12 @@ describe('auto-font-size', function() {
         render('<div auto-font-size="options"  style="width: 100px; height: 100px; font-size: 12px">ipsum lorem</div>');
         assertFontSizeEquals(12);
     });
+
+    it('should maintain line height if configured to', function() {
+      scope.options = {preserveLineHeight: true};
+      render('<div auto-font-size="options" style="width: 70px; height: 18px; font-size: 16px; line-height: 16px;">This is too long</div>');
+      assertLineHeightEquals(16);
+    });
     
     // ### Observing the resize
     // You can observe the 'auto-font-size:resized' event
@@ -99,6 +105,11 @@ describe('auto-font-size', function() {
         expect(fontSizeI()).toBe(size);
         return fontSizeI();
     }
+
+    function assertLineHeightEquals(size) {
+        expect(lineHeightI()).toBe(size);
+        return lineHeightI();
+    }
     
     function assertFontSizeLessThan(size) {
         expect(fontSizeI() < size).toBe(true);
@@ -117,6 +128,11 @@ describe('auto-font-size', function() {
     function fontSizeI() {
         var fontSize = elem.find('[data-role="inner"]').css('font-size');
         return Number(fontSize.match(/\d+/)[0]);        
+    }
+
+    function lineHeightI() {
+        var lineSize = elem.find('[data-role="inner"]').css('line-height');
+        return Number(lineSize.match(/\d+/)[0]);        
     }
     
     function render(html) {

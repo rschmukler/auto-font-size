@@ -14,7 +14,8 @@ angular.module('AutoFontSize', [])
                         var options = angular.extend({
                             shrink: true,
                             grow: true,
-                            minSize: 1
+                            minSize: 1,
+                            preserveLineHeight: false
                         }, providedOptions);
                     
                         var inner = angular.element(elem[0].querySelector('div[data-role]'));
@@ -65,12 +66,19 @@ angular.module('AutoFontSize', [])
 
                         function adjustLineHeightAndInlineImages() {
                             if (!fontSizeAdjusted()) { return; }
-                            var size = fontSizeI();
-                            inner[0].style.lineHeight = (size+2) + 'px';
+                            var size;
+
+                            if (options.preserveLineHeight) {
+                              size = css(elem, 'line-height');
+                            } else {
+                              size = fontSizeI() + 2;
+                            }
+
                             var images = inner[0].querySelectorAll('img');
                             angular.forEach(images, function(img) {
-                              img.style.height((size + 2) + 'px');
+                              img.style.height((size) + 'px');
                             });
+                            inner[0].style.lineHeight = (size) + 'px';
                         }
 
                         function fontSizeAdjusted() {
