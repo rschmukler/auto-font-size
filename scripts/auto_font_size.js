@@ -75,15 +75,26 @@ angular.module('AutoFontSize', [])
                         function fontSizeAdjusted() {
                             return !!inner[0].style.fontSize;
                         }
-                    
+
                         function fontTooBig() {
-                            return (inner[0].offsetWidth > elem[0].offsetWidth || inner[0].offsetHeight > elem[0].offsetHeight);
+                            var verticalPadding = parseInt(css(elem, 'padding-top')) +
+                                                  parseInt(css(elem, 'padding-bottom'));
+
+                            var horizontalPadding = parseInt(css(elem, 'padding-left')) +
+                                                  parseInt(css(elem, 'padding-right'));
+
+
+                            return (inner[0].children[0].offsetWidth > (elem[0].offsetWidth  - horizontalPadding) || inner[0].children[0].offsetHeight > (elem[0].offsetHeight - verticalPadding));
                         }
                     
                         function fontTooSmall() {
-                            return (inner[0].offsetWidth < elem[0].offsetWidth || inner[0].offsetHeight < elem[0].offsetHeight);
+                            var verticalPadding = parseInt(css(elem, 'padding-top')) +
+                                                  parseInt(css(elem, 'padding-bottom'));
+                            var horizontalPadding = parseInt(css(elem, 'padding-left')) +
+                                                  parseInt(css(elem, 'padding-right'));
+
+                            return (inner[0].children[0].offsetWidth < elem[0].offsetWidth - horizontalPadding && inner[0].children[0].offsetHeight < elem[0].offsetHeight - verticalPadding);
                         }
-                    
                     }
                 }
             };
