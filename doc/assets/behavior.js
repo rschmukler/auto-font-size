@@ -13,7 +13,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "commentsOnly": true,
           "name": "Markdown"
         },
-        "sourcePath": "/Users/brent/Pedago/auto-font-size/doc.md",
+        "sourcePath": "/Users/nbrustein/code/auto-font-size/doc.md",
         "projectPath": "doc.md",
         "targetPath": "index",
         "pageTitle": "index",
@@ -41,7 +41,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "JavaScript"
             },
-            "sourcePath": "/Users/brent/Pedago/auto-font-size/scripts/auto_font_size.js",
+            "sourcePath": "/Users/nbrustein/code/auto-font-size/scripts/auto_font_size.js",
             "projectPath": "scripts/auto_font_size.js",
             "targetPath": "scripts/auto_font_size",
             "pageTitle": "scripts/auto_font_size",
@@ -71,7 +71,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "JavaScript"
             },
-            "sourcePath": "/Users/brent/Pedago/auto-font-size/spec/auto_font_size_spec.js",
+            "sourcePath": "/Users/nbrustein/code/auto-font-size/spec/auto_font_size_spec.js",
             "projectPath": "spec/auto_font_size_spec.js",
             "targetPath": "spec/auto_font_size_spec",
             "pageTitle": "spec/auto_font_size_spec",
