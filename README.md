@@ -27,7 +27,7 @@ or
 
 ### Dependencies
 
-requires angular and jquery
+requires angular
 
 
 ### Documentation
