@@ -38,6 +38,7 @@ angular.module('AutoFontSize', [])
                                     setFontSize(fontSizeI() + 1);
                                     i = i + 1;
                                 }
+                                setFontSize(fontSizeI() - 1); // We grew too big, shrink it back one
                             } else {
                                 return;
                             }
@@ -84,7 +85,7 @@ angular.module('AutoFontSize', [])
                                                   parseInt(css(elem, 'padding-right'));
 
 
-                            return (inner[0].children[0].offsetWidth > (elem[0].offsetWidth  - horizontalPadding) || inner[0].children[0].offsetHeight > (elem[0].offsetHeight - verticalPadding));
+                            return (inner[0].children[0].offsetWidth > (elem[0].offsetWidth - horizontalPadding) || inner[0].children[0].offsetHeight > (elem[0].offsetHeight - verticalPadding));
                         }
                     
                         function fontTooSmall() {
