@@ -17,7 +17,7 @@ angular.module('AutoFontSize', [])
                             minSize: 1
                         }, providedOptions);
                     
-                        var inner = elem.find('div[data-role]');
+                        var inner = angular.element(elem[0].querySelector('div[data-role]'));
                         
                         // on every scope.$digest, check if a resize is needed
                         scope.$watch(shrinkOrGrow);
@@ -47,34 +47,41 @@ angular.module('AutoFontSize', [])
                                 elem: elem
                             });
                         }
+
+                        function css(el, prop) {
+                            if($window.getComputedStyle) return $window.getComputedStyle(el[0]).getPropertyValue(prop);
+                        }
                         
                         function fontSizeI() {
-                            var fontSize = inner.css('font-size');
+                            var fontSize = css(inner, 'font-size');
                             return Number(fontSize.match(/\d+/)[0]);
                         }
                     
                         function setFontSize(size) {
-                            inner.css('fontSize', size + 'px');
+                            inner[0].style.fontSize = size + 'px';
                             adjustLineHeightAndInlineImages();
                         }
 
                         function adjustLineHeightAndInlineImages() {
                             if (!fontSizeAdjusted()) { return; }
                             var size = fontSizeI();
-                            inner.css('lineHeight', (size+2) + 'px');
-                            inner.find('img').height(size+2);
+                            inner[0].style.lineHeight = (size+2) + 'px';
+                            var images = inner[0].querySelectorAll('img');
+                            angular.forEach(images, function(img) {
+                              img.style.height((size + 2) + 'px');
+                            });
                         }
 
                         function fontSizeAdjusted() {
-                            return !!inner.css('font-size');
+                            return !!inner[0].style.fontSize;
                         }
                     
                         function fontTooBig() {
-                            return (inner.width() > elem.width() || inner.height() > elem.height());
+                            return (inner[0].offsetWidth > elem[0].offsetWidth || inner[0].offsetHeight > elem[0].offsetHeight);
                         }
                     
                         function fontTooSmall() {
-                            return (inner.width() < elem.width() || inner.height() < elem.height());
+                            return (inner[0].offsetWidth < elem[0].offsetWidth || inner[0].offsetHeight < elem[0].offsetHeight);
                         }
                     
                     }
