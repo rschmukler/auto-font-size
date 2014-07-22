@@ -32,7 +32,7 @@ requires angular
 
 ### Documentation
 
-[0.0.7](http://pedago.github.io/auto-font-size/docs/0.0.7)
+[0.0.7](http://pedago.github.io/auto-font-size/docs/0.0.7)  
 [0.0.6](http://pedago.github.io/auto-font-size/docs/0.0.6)  
 [0.0.5](http://pedago.github.io/auto-font-size/docs/0.0.5)  
 [0.0.4](http://pedago.github.io/auto-font-size/docs/0.0.4)  
