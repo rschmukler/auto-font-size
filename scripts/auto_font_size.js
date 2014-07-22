@@ -77,11 +77,11 @@ angular.module('AutoFontSize', [])
                         }
                     
                         function fontTooBig() {
-                            return (inner[0].offsetWidth > elem[0].offsetWidth || inner[0].offsetHeight > elem[0].offsetHeight);
+                            return (inner[0].children[0].offsetWidth > elem[0].offsetWidth || inner[0].children[0].offsetHeight > elem[0].offsetHeight);
                         }
                     
                         function fontTooSmall() {
-                            return (inner[0].offsetWidth < elem[0].offsetWidth || inner[0].offsetHeight < elem[0].offsetHeight);
+                            return (inner[0].children[0].offsetWidth < elem[0].offsetWidth || inner[0].children[0].offsetHeight < elem[0].offsetHeight);
                         }
                     
                     }
