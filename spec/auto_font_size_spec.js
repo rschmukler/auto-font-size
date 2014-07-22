@@ -85,7 +85,7 @@ describe('auto-font-size', function() {
     it('should resize on every scope.$digest', function() {
         render('<div auto-font-size="options" style="width: 20px; height: 20px; font-size: 16px">this is too much text to fit</div>');
         var fontSize = assertFontSizeLessThan(20);
-        elem.find('[data-role="inner"]').html('less font');
+        elem.find('[data-role="inner"]').html('<span>less font</span>');
         
         //font size should not have changed yet, because there has not been a scope digest
         assertFontSizeEquals(fontSize);
