@@ -21,7 +21,7 @@ angular.module('AutoFontSize', [])
                         var inner = angular.element(elem[0].querySelector('div[data-role]'));
                         
                         // on every scope.$digest, check if a resize is needed
-                        scope.$watch(shrinkOrGrow);
+                        scope.$postDigest(shrinkOrGrow);
 
                         function shrinkOrGrow() {
                             var i = 0;
