@@ -88,6 +88,8 @@ angular.module('AutoFontSize', [])
                         }
 
                         function fontTooBig() {
+                            // dont do anything if we are in a display none parent
+                            if (!inner[0].children[0].offsetWidth) return false;
                             var verticalPadding = parseInt(css(elem, 'padding-top')) +
                                                   parseInt(css(elem, 'padding-bottom'));
 
@@ -99,6 +101,8 @@ angular.module('AutoFontSize', [])
                         }
                     
                         function fontTooSmall() {
+                            // dont do anything if we are in a display none parent
+                            if (!inner[0].children[0].offsetWidth) return false;
                             var verticalPadding = parseInt(css(elem, 'padding-top')) +
                                                   parseInt(css(elem, 'padding-bottom'));
                             var horizontalPadding = parseInt(css(elem, 'padding-left')) +
