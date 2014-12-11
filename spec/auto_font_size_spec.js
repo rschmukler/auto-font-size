@@ -2,15 +2,16 @@
 
 describe('auto-font-size', function() {
 
-    var $compile, $rootScope, $document, elem, scope, stage;
+    var $compile, $rootScope, $document, $timeout, elem, scope, stage;
 
     beforeEach(function() {
         module('AutoFontSize');
                 
-        inject(function(_$compile_, _$rootScope_, _$document_){
+        inject(function(_$compile_, _$rootScope_, _$document_, _$timeout_){
             $compile = _$compile_;
             $rootScope = _$rootScope_;
             $document = _$document_;
+            $timeout = _$timeout_;
             $($document[0].body).append('<div class="afs_test_div"></div>');    
             stage = $.find('.afs_test_div');
             expect(stage.length).toBe(1);
@@ -98,6 +99,7 @@ describe('auto-font-size', function() {
         
         //after the digest call, font size should change
         scope.$digest();
+        $timeout.flush();
         assertFontSizeGreaterThan(fontSize);
     });
     
@@ -142,6 +144,7 @@ describe('auto-font-size', function() {
         var compiled = $compile(elem);
         compiled(scope);
         scope.$digest();
+        $timeout.flush();
         
         elem = elem;
     }

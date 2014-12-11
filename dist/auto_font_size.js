@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('AutoFontSize', [])
-    .directive('autoFontSize', ['$window', 
-        function($window) {
+    .directive('autoFontSize', ['$window', '$timeout',
+        function($window, $timeout) {
 
             return {
                 template: '<div data-role="inner" ng-transclude></div>',
@@ -21,7 +21,9 @@ angular.module('AutoFontSize', [])
                         var inner = angular.element(elem[0].querySelector('div[data-role]'));
                         
                         // on every scope.$digest, check if a resize is needed
-                        scope.$postDigest(shrinkOrGrow);
+                        scope.$watch(function() {
+                          $timeout(shrinkOrGrow, 0, false);
+                        });
 
                         function shrinkOrGrow() {
                             var i = 0;
