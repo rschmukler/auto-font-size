@@ -58,7 +58,9 @@ angular.module('AutoFontSize', [])
                         
                         function fontSizeI() {
                             var fontSize = css(inner, 'font-size');
-                            return Number(fontSize.match(/\d+/)[0]);
+                            var match = fontSize.match(/\d+/);
+                            if (!match) {return;}
+                            return Number(match[0]);
                         }
                     
                         function setFontSize(size) {
